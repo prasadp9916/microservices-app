@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  gateway:
+    build: ./gateway
+    ports:
+      - "8080:80"
+    depends_on:
+      - catalog
+      - order
+
+  catalog:
+    build: ./services/CatalogService
+    container_name: catalog
+
+  order:
+    build: ./services/OrderService
+    container_name: order
+    environment:
+      - Catalog__BaseUrl=http://catalog
